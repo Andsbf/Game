@@ -5,6 +5,7 @@ require 'pry'
 game_1 = Game.new
 game_1.sets
 game_1.num_players.times {game_1.create_player}
+game_1.rules
 
 while ( game_1.active_players.length > 1 ) && ( game_1.round_index > 0 ) 
 

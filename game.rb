@@ -66,16 +66,11 @@ class Game
     puts "\n#{current_player.name}, What does #{num1} #{op} #{num2}  is equal?\n"
     right_answer = num1.method(op).(num2)  
 
-
-    user_input = Timeout::timeout(5){gets.chomp} rescue nil 
-
-    # user_input = nil
-    # while user_input.nil?
-    #   user_input = Integer(gets) rescue nil
-    # end
-    
+    user_input = Timeout::timeout(4){gets.chomp} rescue nil 
+    p "Timeout" if user_input == nil
     result = user_input.to_i == right_answer
     result ? current_player.score += 1 : current_player.lives -= 1 
+    sleep (1)
     result
   end
 
@@ -99,6 +94,12 @@ class Game
       winner.first.name + " is the winner!!!"
     end
 
+  end
+
+  def rules
+    puts "Game Rule:\nEach player has 4 seconds to answer each question!!!"
+    p "Ready?(Press ENTER to continue)"
+    gets
   end
 
   def round_index
