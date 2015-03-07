@@ -1,3 +1,5 @@
+require 'timeout'
+
 class Player
   
   attr_accessor :name, :score, :lives
@@ -64,12 +66,15 @@ class Game
     puts "\n#{current_player.name}, What does #{num1} #{op} #{num2}  is equal?\n"
     right_answer = num1.method(op).(num2)  
 
-    user_input = nil
-    while user_input.nil?
-      user_input = Integer(gets) rescue nil
-    end
+
+    user_input = Timeout::timeout(5){gets.chomp} rescue nil 
+
+    # user_input = nil
+    # while user_input.nil?
+    #   user_input = Integer(gets) rescue nil
+    # end
     
-    result = user_input == right_answer
+    result = user_input.to_i == right_answer
     result ? current_player.score += 1 : current_player.lives -= 1 
     result
   end
@@ -85,8 +90,15 @@ class Game
   end
 
   def pick_winner
+
     winner = @@active_players.sort_by{|x| [x.score, x.lives]}.reverse
-    [winner[0].score,winner[0].lives] == [winner[1].score,winner[1].lives] ? "It is a draw" : ( winner.first.name + " is the winner" ) 
+    
+    if winner.length > 1
+      [winner[0].score,winner[0].lives] == [winner[1].score,winner[1].lives] ? "It is a draw" : ( winner.first.name + " is the winner!!!" ) 
+    else
+      winner.first.name + " is the winner!!!"
+    end
+
   end
 
   def round_index
