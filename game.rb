@@ -21,24 +21,29 @@ class Player
 
   
 end 
+
 ##############################################################################################################################
 
 class Game
 
 attr_accessor :gamers, :active_players, :current_player_index, :round_index, :num_players 
-
+  
   def initialize
-  @gamers = []
-  @active_players = []
-  @current_player_index = 0
-  @round_index = 0
-  @num_players = 0
+    @gamers = []
+    @active_players = []
+    @current_player_index = 0
+    @round_index = 0
+    @num_players = 0
   end
 
   def create_player
+    player_name_input = nil
     p "Player #{@gamers.length + 1} name:"  
-    player_name_input = gets.chomp
-    player_name_input = Player.new(player_name_input)
+
+    while player_name_input == "" or player_name_input == nil
+    player_name_input = gets.chomp  
+    end
+        player_name_input = Player.new(player_name_input)
     @gamers << player_name_input
     @active_players  << player_name_input
     @Bananada = 2
@@ -103,24 +108,5 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
     p "Ready?(Press ENTER to continue)"
     gets
   end
-
-  # def round_index
-  #   @round_index
-  # end
-
-  # def gamers
-  #   @gamers
-  # end
-
-  # def active_players
-  #   @active_players
-  # end
-
-  # def num_players
-  #   @num_players
-  # end
-
-
-
 end
 
