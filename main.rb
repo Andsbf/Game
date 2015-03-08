@@ -3,6 +3,7 @@ require './game.rb'
 require 'pry'
 
 game_1 = Game.new
+binding.pry
 game_1.sets
 game_1.num_players.times {game_1.create_player}
 game_1.rules
