@@ -38,7 +38,7 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
 
   def create_player
     player_name_input = nil
-    p "Player #{@gamers.length + 1} name:"  
+    p "Player #{gamers.length + 1} name:"  
 
     while player_name_input == "" or player_name_input == nil
     player_name_input = gets.chomp  
@@ -66,6 +66,7 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
   end
 
   def round
+    
     right_answer = self.question
     user_input = self.user_answer
     result = user_input == right_answer
@@ -76,17 +77,17 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
 
   def update 
     @round_index -= 1
-    @current_player_index == (@active_players.length - 1) ? @current_player_index = 0 : @current_player_index += 1 
-    @active_players = @gamers.select{|x| x.lives > 0}
+    @current_player_index == (active_players.length - 1) ? @current_player_index = 0 : @current_player_index += 1 
+    @active_players = gamers.select{|x| x.lives > 0}
   end
 
   def current_player 
-    @active_players[@current_player_index]
+    active_players[current_player_index]
   end
 
   def pick_winner #return String with winner phrase
 
-    winner = @active_players.sort_by{|x| [x.score, x.lives]}.reverse
+    winner = active_players.sort_by{|x| [x.score, x.lives]}.reverse
     
     if winner.length > 1
       [winner[0].score,winner[0].lives] == [winner[1].score,winner[1].lives] ? "It is a draw" : ( winner.first.name + " is the winner!!!" ) 
