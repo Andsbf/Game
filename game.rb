@@ -46,7 +46,7 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
         player_name_input = Player.new(player_name_input)
     @gamers << player_name_input
     @active_players  << player_name_input
-    @Bananada = 2
+    
   end
 
   def sets
@@ -66,32 +66,25 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
   end
 
   def round
-
-    num1, num2 = rand(1..20) , rand(1..20)
-    op = ['+','-','*','/'][rand(4)]
-    
-    puts "\n#{current_player.name}, What does #{num1} #{op} #{num2}  is equal?\n"
-    right_answer = num1.method(op).(num2)  
-
-    user_input = Timeout::timeout(4){gets.chomp} rescue nil 
-    p "Timeout" if user_input == nil
-    result = user_input.to_i == right_answer
+    right_answer = self.question
+    user_input = self.user_answer
+    result = user_input == right_answer
     result ? current_player.score += 1 : current_player.lives -= 1 
     sleep (1)
     result
   end
 
-  def update
+  def update 
     @round_index -= 1
     @current_player_index == (@active_players.length - 1) ? @current_player_index = 0 : @current_player_index += 1 
     @active_players = @gamers.select{|x| x.lives > 0}
   end
 
-  def current_player
+  def current_player 
     @active_players[@current_player_index]
   end
 
-  def pick_winner
+  def pick_winner #return String with winner phrase
 
     winner = @active_players.sort_by{|x| [x.score, x.lives]}.reverse
     
@@ -107,6 +100,21 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
     puts "Game Rule:\nEach player has 4 seconds to answer each question!!!"
     p "Ready?(Press ENTER to continue)"
     gets
+  end
+
+  def question
+    num1, num2 = rand(1..20) , rand(1..20)
+    op = ['+','-','*','/'][rand(4)]
+    
+    puts "\n#{current_player.name}, What does #{num1} #{op} #{num2}  is equal?\n"
+    num1.method(op).(num2)
+    
+  end
+
+  def user_answer
+    answer = Timeout::timeout(4){gets.chomp} rescue nil 
+    p "Timeout" if answer == nil
+    answer.to_i
   end
 end
 
