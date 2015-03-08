@@ -67,8 +67,8 @@ attr_accessor :gamers, :active_players, :current_player_index, :round_index, :nu
 
   def round
     
-    right_answer = self.question
-    user_input = self.user_answer
+    right_answer = question
+    user_input = user_answer
     result = user_input == right_answer
     result ? current_player.score += 1 : current_player.lives -= 1 
     sleep (1)
